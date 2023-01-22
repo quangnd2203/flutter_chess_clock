@@ -3,6 +3,8 @@ import 'package:demo_bloc/blocs/time_bloc/time_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../helper.dart';
+
 class TimeView extends StatelessWidget {
   const TimeView({Key? key, required this.timeBloc, required this.bgColor, required this.textColor}) : super(key: key);
 
@@ -66,25 +68,25 @@ class TimeView extends StatelessWidget {
       builder: (context, state) {
         if (state is TimeRunState) {
           return Text(
-            state.duration.toString().replaceRange(9, 14, ''),
+            formatTime(state.duration),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 60, color: textColor),
           );
         }
         if (state is TimeStartState) {
           return Text(
-            state.duration.toString().replaceRange(9, 14, ''),
+            formatTime(state.duration),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 60, color: textColor),
           );
         }
         if (state is TimeCompleteState) {
           return Text(
-            state.duration.toString().replaceRange(9, 14, ''),
+            formatTime(state.duration),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 60, color: textColor),
           );
         }
         if (state is TimePauseState) {
           return Text(
-            state.duration.toString().replaceRange(9, 14, ''),
+            formatTime(state.duration),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 60, color: textColor),
           );
         }
