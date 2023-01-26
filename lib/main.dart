@@ -1,7 +1,6 @@
-import 'package:demo_bloc/views/time_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'views/clock_view.dart';
+import 'views/clock/clock_view.dart';
 
 void main() {
   runApp(const MyApp());
