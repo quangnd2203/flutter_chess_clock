@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
+
+import '../chess_clock_bloc/chess_clock_bloc.dart';
 
 part 'time_event.dart';
 part 'time_state.dart';
 
 class TimeBloc extends Bloc<TimeEvent, TimeState> {
   final Duration initialDuration;
-  late Timer _timer;
+  Timer? _timer;
   late Duration _duration;
+  ChessClockBloc get clockBloc => Get.find<ChessClockBloc>();
 
   TimeBloc(this.initialDuration) : super(TimeStartState(initialDuration)) {
     _duration = initialDuration;
@@ -26,10 +30,10 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
   }
 
   Future<void> _onDecreaseTime(RunEvent event, Emitter<TimeState> emit) async {
-    const Duration duration = Duration(milliseconds: 100);
+    const Duration duration = Duration(milliseconds: 10);
     _timer = Timer.periodic(duration, (timer) {
       _duration -= duration;
-      if(!(_duration.isNegative)) {
+      if(!(_duration.inSeconds <= 0)) {
         add(RunningEvent());
       } else {
         add(StopEvent());
@@ -42,17 +46,18 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
   }
 
   Future<void> _onPauseTime(PauseEvent event, Emitter<TimeState> emit) async {
-    _timer.cancel();
+    _timer?.cancel();
     emit(TimePauseState(_duration));
   }
 
   Future<void> _onStopEvent(StopEvent event, Emitter<TimeState> emit) async {
-    _timer.cancel();
-    emit(TimeCompleteState());
+    _timer?.cancel();
+    emit(const TimeCompleteState());
+    clockBloc.add(ChessClockStop());
   }
 
   Future<void> _onResetEvent(ResetEvent event, Emitter<TimeState> emit) async {
-    _timer.cancel();
+    _timer?.cancel();
     _duration = initialDuration;
     emit(TimeStartState(initialDuration));
   }

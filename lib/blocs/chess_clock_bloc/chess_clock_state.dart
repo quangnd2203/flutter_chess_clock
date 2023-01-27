@@ -1,10 +1,14 @@
 part of 'chess_clock_bloc.dart';
 
 @immutable
-abstract class ChessClockState extends Equatable {}
+abstract class ChessClockState {}
 
-class ChessClockInitial extends ChessClockState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-}
+class ChessClockInitial extends ChessClockState {}
+
+class ChessClockStartState extends ChessClockState {}
+
+class ChessClockPauseState extends ChessClockState {}
+
+class ChessClockStopState extends ChessClockState {}
+
+class ChessClockResetState extends ChessClockState {}

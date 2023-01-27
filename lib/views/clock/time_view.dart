@@ -11,19 +11,31 @@ class TimeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = buildTime();
     return BlocConsumer(
-      builder: (context, state){
+      builder: (context, TimeState state){
         return Material(
-          color: (state is TimeRunState) ? Colors.green : Colors.grey,
+          color: getBackground(state),
           child: Center(
-            child: child,
+            child: Text(
+              formatTime(state.duration),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 95, color: (state is TimeRunState) ? Colors.white : Colors.black),
+            ),
           ),
         );
       },
       bloc: timeBloc,
       listener: (context, state) {},
     );
+  }
+
+  Color getBackground(TimeState state){
+    switch(state.runtimeType){
+      case TimeRunState:
+        return Colors.green;
+      case TimeCompleteState:
+        return Colors.red;
+    }
+    return Colors.grey;
   }
 
   Widget buildButton(IconData icon, VoidCallback action, [Color? color]) {
@@ -38,20 +50,4 @@ class TimeView extends StatelessWidget {
     );
   }
 
-  Widget buildTime() {
-    return BlocConsumer(
-      builder: (context, TimeState state) {
-        return Text(
-          formatTime(state.duration),
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 95, color: (state is TimeRunState) ? Colors.white : Colors.black),
-        );
-      },
-      listener: (context, state) {},
-      bloc: timeBloc,
-    );
-  }
-
-  String durationToString(Duration duration) {
-    return duration.toString().replaceRange(10, 14, '');
-  }
 }
