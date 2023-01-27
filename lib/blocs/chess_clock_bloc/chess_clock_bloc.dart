@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:demo_bloc/helper.dart';
 import 'package:meta/meta.dart';
 
+import '../../constants/app_sound.dart';
 import '../time_bloc/time_bloc.dart';
 
 part 'chess_clock_event.dart';
@@ -54,23 +55,25 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
     }
   }
 
-  _onChessClockRun1(ChessClockRun1 event, Emitter<ChessClockState> emit) {
+  _onChessClockRun1(ChessClockRun1 event, Emitter<ChessClockState> emit) async {
     if (state is ChessClockStopState) return;
     if (timeBloc1.state is TimeRunState) return;
     if (state is! ChessClockStart) {
       emit(ChessClockStartState());
     }
+    AppSound().tapAudio.play().then((value) => AppSound().tapAudio.seek(Duration.zero));
     timeBloc2.add(PauseEvent());
     timeBloc1.add(RunEvent());
     isClock1 = true;
   }
 
-  _onChessClockRun2(ChessClockRun2 event, Emitter<ChessClockState> emit) {
+  _onChessClockRun2(ChessClockRun2 event, Emitter<ChessClockState> emit) async {
     if (state is ChessClockStopState) return;
     if (timeBloc2.state is TimeRunState) return;
     if (state is! ChessClockStart) {
       emit(ChessClockStartState());
     }
+    AppSound().tapAudio.play().then((value) => AppSound().tapAudio.seek(Duration.zero));
     timeBloc1.add(PauseEvent());
     timeBloc2.add(RunEvent());
     isClock1 = false;
