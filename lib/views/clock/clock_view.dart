@@ -20,7 +20,7 @@ class ClockView extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  clockBloc.add(ChessClockRun1());
+                  clockBloc.add(ChessClockRun2());
                 },
                 child: Transform.rotate(
                   angle: pi,
@@ -34,7 +34,7 @@ class ClockView extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  clockBloc.add(ChessClockRun2());
+                  clockBloc.add(ChessClockRun1());
                 },
                 child: TimeView(
                   timeBloc: clockBloc.timeBloc2,
@@ -93,10 +93,14 @@ class ClockView extends StatelessWidget {
           return const SizedBox();
         }
         if (state is ChessClockStartState) {
-          return buildButtonSetting(Icons.pause);
+          return buildButtonSetting(Icons.pause, (){
+            clockBloc.add(ChessClockPause());
+          });
         }
         if (state is ChessClockPauseState || state is ChessClockInitial) {
-          return buildButtonSetting(Icons.play_arrow);
+          return buildButtonSetting(Icons.play_arrow, (){
+            clockBloc.add(ChessClockStart());
+          });
         }
         return const SizedBox();
       },

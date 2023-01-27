@@ -10,6 +10,7 @@ part 'chess_clock_state.dart';
 class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
   late final TimeBloc timeBloc1;
   late final TimeBloc timeBloc2;
+  bool isClock1 = true;
 
   ChessClockBloc() : super(ChessClockInitial()) {
     on<ChessClockStart>(_onChessClockStart);
@@ -24,6 +25,11 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
 
   _onChessClockStart(ChessClockStart event, Emitter<ChessClockState> emit) {
     emit(ChessClockStartState());
+    if(isClock1){
+      add(ChessClockRun1());
+    }else{
+      add(ChessClockRun2());
+    }
   }
 
   _onChessClockPause(ChessClockPause event, Emitter<ChessClockState> emit) {
@@ -50,21 +56,23 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
 
   _onChessClockRun1(ChessClockRun1 event, Emitter<ChessClockState> emit) {
     if (state is ChessClockStopState) return;
-    if (timeBloc2.state is TimeRunState) return;
-    if (state is! ChessClockStart) {
-      emit(ChessClockStartState());
-    }
-    timeBloc1.add(PauseEvent());
-    timeBloc2.add(RunEvent());
-  }
-
-  _onChessClockRun2(ChessClockRun2 event, Emitter<ChessClockState> emit) {
-    if (state is ChessClockStopState) return;
     if (timeBloc1.state is TimeRunState) return;
     if (state is! ChessClockStart) {
       emit(ChessClockStartState());
     }
     timeBloc2.add(PauseEvent());
     timeBloc1.add(RunEvent());
+    isClock1 = true;
+  }
+
+  _onChessClockRun2(ChessClockRun2 event, Emitter<ChessClockState> emit) {
+    if (state is ChessClockStopState) return;
+    if (timeBloc2.state is TimeRunState) return;
+    if (state is! ChessClockStart) {
+      emit(ChessClockStartState());
+    }
+    timeBloc1.add(PauseEvent());
+    timeBloc2.add(RunEvent());
+    isClock1 = false;
   }
 }
