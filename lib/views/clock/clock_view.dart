@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:demo_bloc/constants/app_sound.dart';
 import 'package:demo_bloc/views/clock/time_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,6 +109,8 @@ class ClockView extends StatelessWidget {
   }
 
   Widget soundState() {
-    return buildButtonSetting(true ? Icons.volume_up : Icons.volume_off);
+    return buildButtonSetting(true ? Icons.volume_up : Icons.volume_off, (){
+      AppSound().play(SoundValue.click);
+    });
   }
 }

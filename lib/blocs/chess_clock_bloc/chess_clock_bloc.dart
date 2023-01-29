@@ -41,6 +41,7 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
 
   _onChessClockStop(ChessClockStop event, Emitter<ChessClockState> emit) {
     emit(ChessClockStopState());
+    AppSound().play(SoundValue.finish);
   }
 
   _onChessClockReset(ChessClockReset event, Emitter<ChessClockState> emit) async {
@@ -61,7 +62,7 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
     if (state is! ChessClockStart) {
       emit(ChessClockStartState());
     }
-    AppSound().tapAudio.play().then((value) => AppSound().tapAudio.seek(Duration.zero));
+    AppSound().play(SoundValue.next);
     timeBloc2.add(PauseEvent());
     timeBloc1.add(RunEvent());
     isClock1 = true;
@@ -73,7 +74,7 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
     if (state is! ChessClockStart) {
       emit(ChessClockStartState());
     }
-    AppSound().tapAudio.play().then((value) => AppSound().tapAudio.seek(Duration.zero));
+    AppSound().play(SoundValue.next);
     timeBloc1.add(PauseEvent());
     timeBloc2.add(RunEvent());
     isClock1 = false;
