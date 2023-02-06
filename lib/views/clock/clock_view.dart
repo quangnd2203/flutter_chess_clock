@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
 import 'package:demo_bloc/constants/app_sound.dart';
 import 'package:demo_bloc/views/clock/time_view.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class ClockView extends StatelessWidget {
   ClockView({Key? key}) : super(key: key);
 
   final ChessClockBloc clockBloc = Get.put<ChessClockBloc>(ChessClockBloc());
+  final SoundCubit soundCubit = Get.put<SoundCubit>(SoundCubit());
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class ClockView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          buildButtonSetting(Icons.refresh, (){
+          buildButtonSetting(Icons.refresh, () {
             clockBloc.add(ChessClockReset());
           }),
           const SizedBox(
@@ -94,12 +96,12 @@ class ClockView extends StatelessWidget {
           return const SizedBox();
         }
         if (state is ChessClockStartState) {
-          return buildButtonSetting(Icons.pause, (){
+          return buildButtonSetting(Icons.pause, () {
             clockBloc.add(ChessClockPause());
           });
         }
         if (state is ChessClockPauseState || state is ChessClockInitial) {
-          return buildButtonSetting(Icons.play_arrow, (){
+          return buildButtonSetting(Icons.play_arrow, () {
             clockBloc.add(ChessClockStart());
           });
         }
@@ -109,8 +111,14 @@ class ClockView extends StatelessWidget {
   }
 
   Widget soundState() {
-    return buildButtonSetting(true ? Icons.volume_up : Icons.volume_off, (){
-      AppSound().play(SoundValue.click);
-    });
+    return BlocConsumer(
+      builder: (context, bool state) {
+        return buildButtonSetting(state ? Icons.volume_up : Icons.volume_off, () {
+          AppSound().play(SoundValue.click);
+        });
+      },
+      listener: (state, context) {},
+      bloc: soundCubit,
+    );
   }
 }
