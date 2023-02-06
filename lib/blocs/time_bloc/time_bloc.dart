@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:demo_bloc/constants/app_sound.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
     const Duration duration = Duration(milliseconds: 10);
     _timer = Timer.periodic(duration, (timer) {
       _duration -= duration;
-      if(!(_duration.inSeconds <= 0)) {
+      if (!(_duration.inSeconds <= 0)) {
         add(RunningEvent());
       } else {
         add(StopEvent());
@@ -42,6 +43,9 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
   }
 
   Future<void> _onRunningTime(RunningEvent event, Emitter<TimeState> emit) async {
+    if((_duration.inMilliseconds + 10) % 1000 == 0) {
+      AppSound().play(SoundValue.click);
+    }
     emit(TimeRunState(_duration));
   }
 
