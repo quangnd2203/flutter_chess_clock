@@ -1,5 +1,5 @@
 import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 
 class AppSound {
@@ -11,32 +11,29 @@ class AppSound {
   }
 
   final AudioPlayer _player = AudioPlayer();
-  late List<AudioSource> _playList;
+  final AudioCache _cache = AudioCache();
   SoundValue? _currentValue;
 
-  Future<void> loading() async {
-    _playList = SoundValue.values.map((s){
-      return AudioSource.asset(s.asset);
-    }).toList();
+  Future<dynamic> loading() async {
+    return _cache.loadAll(SoundValue.values.map((e) => e.asset).toList());
   }
 
   Future<void> play(SoundValue value) async {
     if(!Get.find<SoundCubit>().state) return;
     if(_currentValue != value){
       _currentValue = value;
-      await _player.setAudioSource(_playList[value.index]);
     }
     await _player.seek(Duration.zero);
-    await _player.play();
+    await _player.play(AssetSource(value.asset));
   }
 }
 
 enum SoundValue {
-  next('assets/audio/next.m4a'),
-  click('assets/audio/click.wav'),
-  finish('assets/audio/finish.m4a'),
-  tic('assets/audio/tic.wav'),
-  ring('assets/audio/ring.mp3');
+  next('audio/next.m4a'),
+  click('audio/click.wav'),
+  finish('audio/finish.m4a'),
+  tic('audio/tic.wav'),
+  ring('audio/ring.mp3');
 
   final String asset;
   const SoundValue(this.asset);
