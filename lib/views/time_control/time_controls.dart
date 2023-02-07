@@ -37,18 +37,47 @@ class TimeControls extends StatelessWidget {
           Expanded(
             child: buildBody(),
           ),
+          buildButtonStart(),
         ],
+      ),
+    );
+  }
+
+  Widget buildButtonStart() {
+    return Container(
+      height: 60,
+      margin: const EdgeInsets.all(24).copyWith(top: 0),
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            blurRadius: 0.6,
+            spreadRadius: 1,
+            offset: Offset(0, -1),
+            color: Colors.green,
+          ),
+        ],
+      ),
+      child: const Center(
+        child: Text(
+          'Start',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
 
   Widget buildBody() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16).copyWith(bottom: 90),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
           buildButtonAdd(),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           buildList(),
         ],
       ),

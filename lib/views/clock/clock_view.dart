@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
 import 'package:demo_bloc/constants/app_colors.dart';
 import 'package:demo_bloc/views/clock/time_view.dart';
-import 'package:demo_bloc/views/time/time_controls.dart';
+import 'package:demo_bloc/views/time_control/time_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../blocs/chess_clock_bloc/chess_clock_bloc.dart';

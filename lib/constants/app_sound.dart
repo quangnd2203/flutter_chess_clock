@@ -17,9 +17,7 @@ class AppSound {
   Future<dynamic> loading() async {
     _player.onDurationChanged.listen((event) {
       if(!Get.find<SoundCubit>().state){
-        _player.setVolume(0);
-      }else{
-        _player.setVolume(1);
+        _player.stop();
       }
     });
     return _cache.loadAll(SoundValue.values.map((e) => e.asset).toList());
