@@ -2,7 +2,7 @@ import 'package:demo_bloc/constants/app_sound.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'views/clock/clock_view.dart';
 
 void main() async {
@@ -10,6 +10,7 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: <SystemUiOverlay>[]);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
   await AppSound().loading();
+  await Hive.initFlutter();
   await Hive.openBox('prefs');
   runApp(const MyApp());
 }

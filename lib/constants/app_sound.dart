@@ -1,4 +1,6 @@
+import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:get/get.dart';
 
 class AppSound {
   AppSound._();
@@ -14,12 +16,12 @@ class AppSound {
 
   Future<void> loading() async {
     _playList = SoundValue.values.map((s){
-      // _player.cacheFile(url: s.asset);
       return AudioSource.asset(s.asset);
     }).toList();
   }
 
   Future<void> play(SoundValue value) async {
+    if(!Get.find<SoundCubit>().state) return;
     if(_currentValue != value){
       _currentValue = value;
       await _player.setAudioSource(_playList[value.index]);

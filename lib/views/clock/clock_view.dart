@@ -113,9 +113,10 @@ class ClockView extends StatelessWidget {
   Widget soundState() {
     return BlocConsumer(
       builder: (context, bool state) {
-        return buildButtonSetting(state ? Icons.volume_up : Icons.volume_off, () {
-          AppSound().play(SoundValue.click);
-        });
+        return buildButtonSetting(
+          state ? Icons.volume_up : Icons.volume_off,
+          () => Get.find<SoundCubit>().changeState(!state),
+        );
       },
       listener: (state, context) {},
       bloc: soundCubit,

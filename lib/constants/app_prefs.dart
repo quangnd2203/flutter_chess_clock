@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 class AppPrefs{
-  static final Box<bool> _box = Hive.box('prefs');
+  static final Box<dynamic> _box = Hive.box('prefs');
 
   static bool get soundState => _box.get('sound') ?? false;
 
