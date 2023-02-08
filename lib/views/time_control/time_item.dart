@@ -1,7 +1,9 @@
+import 'package:demo_bloc/models/time_data_model.dart';
 import 'package:flutter/material.dart';
 
 class TimeItem extends StatelessWidget {
-  const TimeItem({Key? key}) : super(key: key);
+  final TimeDataModel model;
+  const TimeItem({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,10 +11,10 @@ class TimeItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: <Widget>[
-          const Expanded(
+          Expanded(
             child: Text(
-              '1 min - 1sec',
-              style: TextStyle(fontSize: 14, color: Colors.white),
+              '${model.getDurationString()}${model.increase != null ? ' || ${model.increase} sec' : ''}',
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
           const SizedBox(
@@ -39,4 +41,5 @@ class TimeItem extends StatelessWidget {
       ),
     );
   }
+
 }

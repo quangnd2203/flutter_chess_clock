@@ -1,11 +1,16 @@
+import 'package:demo_bloc/blocs/time_data_cubit/time_data_cubit.dart';
 import 'package:demo_bloc/constants/app_colors.dart';
 import 'package:demo_bloc/views/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../../models/time_data_model.dart';
 import 'time_item.dart';
 
 class TimeControls extends StatelessWidget {
-  const TimeControls({Key? key}) : super(key: key);
+  TimeControls({Key? key}) : super(key: key);
+
+  final TimeDataCubit timeDataCubit = Get.put(TimeDataCubit());
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +120,18 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildList() {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => const TimeItem(),
-      itemCount: 20,
-      padding: EdgeInsets.zero,
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
+    // return ;
+    return ValueListenableBuilder<Box<TimeDataModel>>(
+      valueListenable: timeDataCubit.box.listenable(),
+      builder: (BuildContext context, Box<TimeDataModel> value, Widget? child) {
+        return ListView.builder(
+          itemBuilder: (BuildContext context, int index) => TimeItem(model: value.getAt(index)!,),
+          itemCount: value.length,
+          padding: EdgeInsets.zero,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+        );
+      },
     );
   }
 }

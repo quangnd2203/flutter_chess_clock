@@ -68,7 +68,7 @@ class ClockView extends StatelessWidget {
             width: 50,
           ),
           buildButtonSetting(Icons.timer_outlined, (){
-            Get.to(const TimeControls());
+            Get.to(TimeControls());
           }),
           const SizedBox(
             width: 20,
