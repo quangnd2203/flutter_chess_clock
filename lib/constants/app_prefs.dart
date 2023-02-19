@@ -1,3 +1,4 @@
+import 'package:demo_bloc/constants/theme_colors.dart';
 import 'package:hive/hive.dart';
 
 class AppPrefs{
@@ -19,5 +20,11 @@ class AppPrefs{
 
   static set timeDuration(int timeDuration){
     _box.put('timeDuration', timeDuration);
+  }
+
+  static String get hexTheme => _box.get('hexTheme') ?? ThemeColors.green.hex;
+
+  static set hexTheme(String hexColor){
+    _box.put('hexTheme', hexColor);
   }
 }

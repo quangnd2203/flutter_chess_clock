@@ -17,7 +17,8 @@ extension HexColor on Color {
     }
     buffer.write('ff');
     buffer.write(hexStringColor.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16)).withOpacity(opacity);
+    final int temp = int.parse(buffer.toString(), radix: 16);
+    return Color(temp).withOpacity(opacity);
   }
 
   String toHex() {
