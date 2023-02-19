@@ -75,7 +75,7 @@ class TimeControls extends StatelessWidget {
 
   Widget buildBody() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16).copyWith(bottom: 90),
+      padding: const EdgeInsets.only(top: 16, bottom: 90),
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
@@ -92,7 +92,9 @@ class TimeControls extends StatelessWidget {
   Widget buildButtonAdd() {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
-      onTap: () {},
+      onTap: () {
+        timeDataCubit.box.add(TimeDataModel(duration: 999));
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
@@ -120,7 +122,6 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildList() {
-    // return ;
     return ValueListenableBuilder<Box<TimeDataModel>>(
       valueListenable: timeDataCubit.box.listenable(),
       builder: (BuildContext context, Box<TimeDataModel> value, Widget? child) {
