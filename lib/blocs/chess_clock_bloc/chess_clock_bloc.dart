@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:demo_bloc/helper.dart';
 import 'package:meta/meta.dart';
 
+import '../../constants/app_prefs.dart';
 import '../../constants/app_sound.dart';
 import '../time_bloc/time_bloc.dart';
 
