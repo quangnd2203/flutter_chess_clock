@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'constants/app_colors.dart';
 import 'models/time_data_model.dart';
 import 'views/clock/clock_view.dart';
 
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
       title: 'Chess Clock',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: AppColors.bgBlack,
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: AppColors.bgBlack),
       ),
       home: ClockView(),
     );

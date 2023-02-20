@@ -1,5 +1,6 @@
 import 'package:demo_bloc/blocs/time_data_cubit/time_data_cubit.dart';
 import 'package:demo_bloc/constants/app_colors.dart';
+import 'package:demo_bloc/views/custom_time/custom_time.dart';
 import 'package:demo_bloc/views/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,7 +93,9 @@ class TimeControls extends StatelessWidget {
   Widget buildButtonAdd() {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
-      onTap: () {},
+      onTap: () {
+        Get.to(const CustomTime());
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
