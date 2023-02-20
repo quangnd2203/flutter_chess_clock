@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:demo_bloc/helper.dart';
 import 'package:meta/meta.dart';
 
+import '../../constants/app_prefs.dart';
 import '../../constants/app_sound.dart';
 import '../time_bloc/time_bloc.dart';
 
@@ -41,7 +42,7 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
 
   _onChessClockStop(ChessClockStop event, Emitter<ChessClockState> emit) {
     emit(ChessClockStopState());
-    AppSound().play(SoundValue.ring);
+    AppSound().play(SoundValue.finish);
   }
 
   _onChessClockReset(ChessClockReset event, Emitter<ChessClockState> emit) async {
@@ -51,7 +52,7 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
     final _ = await confirm('Reset the clock?');
     if(_ == true){
       emit(ChessClockInitial());
-      timeBloc1.add(ResetEvent());
+      timeBloc1.add(ResetEvent(duration: Duration(seconds: AppPrefs.timeDuration)));
       timeBloc2.add(ResetEvent());
     }
   }

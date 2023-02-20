@@ -12,6 +12,10 @@ class RunningEvent extends TimeEvent{}
 
 class PauseEvent extends TimeEvent{}
 
-class ResetEvent extends TimeEvent{}
+class ResetEvent extends TimeEvent{
+  final Duration? duration;
+
+  ResetEvent({this.duration});
+}
 
 class StopEvent extends TimeEvent{}

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
+import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
 import 'package:demo_bloc/constants/app_colors.dart';
 import 'package:demo_bloc/views/clock/time_view.dart';
 import 'package:demo_bloc/views/time_control/time_controls.dart';
@@ -14,6 +15,7 @@ class ClockView extends StatelessWidget {
 
   final ChessClockBloc clockBloc = Get.put<ChessClockBloc>(ChessClockBloc());
   final SoundCubit soundCubit = Get.put<SoundCubit>(SoundCubit());
+  final ThemeCubit themeCubit = Get.put<ThemeCubit>(ThemeCubit());
 
   @override
   Widget build(BuildContext context) {
