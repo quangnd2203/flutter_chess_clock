@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:demo_bloc/blocs/time_data_cubit/time_data_cubit.dart';
 import 'package:demo_bloc/constants/theme_colors.dart';
 import 'package:demo_bloc/constants/app_prefs.dart';
+import 'package:demo_bloc/views/widgets/theme_switcher.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ThemeCubit extends Cubit<ThemeColors> {
@@ -16,7 +17,26 @@ class ThemeCubit extends Cubit<ThemeColors> {
     // TODO: implement onChange
     super.onChange(change);
     if (change.currentState != change.nextState) {
-      AppPrefs.hexTheme = state.hex;
+      AppPrefs.hexTheme = change.nextState.hex;
+      ThemeSwitcher.of(Get.context!).switchMode(
+        themeData: ThemeData(
+          primaryColor: change.nextState.color,
+          iconTheme: IconThemeData(
+            color: change.nextState.color,
+          ),
+          radioTheme: RadioThemeData(
+            fillColor: MaterialStateProperty.resolveWith((states) {
+              if (states.isEmpty) {
+                return Colors.white38;
+              }
+              if (states.contains(MaterialState.selected)){
+                return change.nextState.color;
+              }
+              return null;
+            }),
+          ),
+        ),
+      );
     }
   }
 }

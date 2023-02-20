@@ -4,6 +4,7 @@ import 'package:demo_bloc/constants/app_colors.dart';
 import 'package:demo_bloc/views/custom_time/custom_time.dart';
 import 'package:demo_bloc/views/app_settings/app_settings.dart';
 import 'package:demo_bloc/views/widgets/custom_appbar.dart';
+import 'package:demo_bloc/views/widgets/theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,6 +20,8 @@ class TimeControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('rebuild');
+    // final a = ThemeSwitcher.of(Get.context!);
     return Scaffold(
       backgroundColor: AppColors.bgBlack,
       body: Column(
@@ -36,7 +39,7 @@ class TimeControls extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Get.to(const AppSettings());
+                  Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => const AppSettings()));
                 },
                 color: Colors.white,
                 splashRadius: 0.1,
@@ -56,33 +59,55 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildButtonStart() {
-    return BlocConsumer(
-      bloc: Get.find<ThemeCubit>(),
-      listener: (context, ThemeColors state) {},
-      builder: (context, ThemeColors state) {
-        return Container(
-          height: 60,
-          margin: const EdgeInsets.all(24).copyWith(top: 0),
-          decoration: BoxDecoration(
-            color: state.color,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                blurRadius: 0.6,
-                spreadRadius: 1,
-                offset: const Offset(0, -1),
-                color: state.color,
-              ),
-            ],
+    // return BlocConsumer(
+    //   bloc: Get.find<ThemeCubit>(),
+    //   listener: (context, ThemeColors state) {},
+    //   builder: (context, ThemeColors state) {
+    //     return Container(
+    //       height: 60,
+    //       margin: const EdgeInsets.all(24).copyWith(top: 0),
+    //       decoration: BoxDecoration(
+    //         color: state.color,
+    //         borderRadius: BorderRadius.circular(16),
+    //         boxShadow: <BoxShadow>[
+    //           BoxShadow(
+    //             blurRadius: 0.6,
+    //             spreadRadius: 1,
+    //             offset: const Offset(0, -1),
+    //             color: state.color,
+    //           ),
+    //         ],
+    //       ),
+    //       child: const Center(
+    //         child: Text(
+    //           'Start',
+    //           style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
+    return Container(
+      height: 60,
+      margin: const EdgeInsets.all(24).copyWith(top: 0),
+      decoration: BoxDecoration(
+        color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            blurRadius: 0.6,
+            spreadRadius: 1,
+            offset: const Offset(0, -1),
+            color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
           ),
-          child: const Center(
-            child: Text(
-              'Start',
-              style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
-      },
+        ],
+      ),
+      child: const Center(
+        child: Text(
+          'Start',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 
@@ -116,15 +141,15 @@ class TimeControls extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const <Widget>[
+          children: <Widget>[
             Icon(
               Icons.add,
-              color: Colors.green,
+              color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
-            Text(
+            const Text(
               'New Custom Time',
               style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -139,7 +164,9 @@ class TimeControls extends StatelessWidget {
       valueListenable: timeDataCubit.box.listenable(),
       builder: (BuildContext context, Box<TimeDataModel> value, Widget? child) {
         return ListView.builder(
-          itemBuilder: (BuildContext context, int index) => TimeItem(model: value.getAt(index)!,),
+          itemBuilder: (BuildContext context, int index) => TimeItem(
+            model: value.getAt(index)!,
+          ),
           itemCount: value.length,
           padding: EdgeInsets.zero,
           physics: const BouncingScrollPhysics(),
