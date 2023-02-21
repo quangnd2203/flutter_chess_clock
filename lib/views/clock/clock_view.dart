@@ -70,7 +70,7 @@ class ClockView extends StatelessWidget {
             width: 50,
           ),
           buildButtonSetting(Icons.timer_outlined, (){
-            Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => TimeControls()));
+            Navigator.of(Get.context!).push(MaterialPageRoute(builder: (context) => TimeControls()));
           }),
           const SizedBox(
             width: 20,

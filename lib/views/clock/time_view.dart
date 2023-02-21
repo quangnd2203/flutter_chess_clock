@@ -1,7 +1,7 @@
 import 'package:demo_bloc/blocs/time_bloc/time_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:get/get.dart';
 import '../../helper.dart';
 
 class TimeView extends StatelessWidget {
@@ -31,7 +31,7 @@ class TimeView extends StatelessWidget {
   Color getBackground(TimeState state){
     switch(state.runtimeType){
       case TimeRunState:
-        return Colors.green;
+        return Theme.of(Get.context!).primaryColor;
       case TimeCompleteState:
         return Colors.red;
     }

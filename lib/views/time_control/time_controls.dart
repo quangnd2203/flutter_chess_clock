@@ -1,13 +1,14 @@
-import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:demo_bloc/blocs/time_data_cubit/time_data_cubit.dart';
 import 'package:demo_bloc/constants/app_colors.dart';
 import 'package:demo_bloc/views/custom_time/custom_time.dart';
 import 'package:demo_bloc/views/app_settings/app_settings.dart';
 import 'package:demo_bloc/views/widgets/custom_appbar.dart';
-import 'package:demo_bloc/views/widgets/theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../blocs/theme_cubit/theme_cubit.dart';
 import '../../constants/theme_colors.dart';
 import '../../models/time_data_model.dart';
 import 'time_item.dart';
@@ -39,7 +40,7 @@ class TimeControls extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => const AppSettings()));
+                  Navigator.of(Get.context!).push(MaterialPageRoute(builder: (context) => const AppSettings()));
                 },
                 color: Colors.white,
                 splashRadius: 0.1,
@@ -59,55 +60,33 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildButtonStart() {
-    // return BlocConsumer(
-    //   bloc: Get.find<ThemeCubit>(),
-    //   listener: (context, ThemeColors state) {},
-    //   builder: (context, ThemeColors state) {
-    //     return Container(
-    //       height: 60,
-    //       margin: const EdgeInsets.all(24).copyWith(top: 0),
-    //       decoration: BoxDecoration(
-    //         color: state.color,
-    //         borderRadius: BorderRadius.circular(16),
-    //         boxShadow: <BoxShadow>[
-    //           BoxShadow(
-    //             blurRadius: 0.6,
-    //             spreadRadius: 1,
-    //             offset: const Offset(0, -1),
-    //             color: state.color,
-    //           ),
-    //         ],
-    //       ),
-    //       child: const Center(
-    //         child: Text(
-    //           'Start',
-    //           style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
-    return Container(
-      height: 60,
-      margin: const EdgeInsets.all(24).copyWith(top: 0),
-      decoration: BoxDecoration(
-        color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            blurRadius: 0.6,
-            spreadRadius: 1,
-            offset: const Offset(0, -1),
-            color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+    return BlocConsumer(
+      bloc: Get.find<ThemeCubit>(),
+      listener: (context, ThemeColors state) {},
+      builder: (context, ThemeColors state) {
+        return Container(
+          height: 60,
+          margin: const EdgeInsets.all(24).copyWith(top: 0),
+          decoration: BoxDecoration(
+            color: state.color,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                blurRadius: 0.6,
+                spreadRadius: 1,
+                offset: const Offset(0, -1),
+                color: state.color,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: const Center(
-        child: Text(
-          'Start',
-          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
+          child: const Center(
+            child: Text(
+              'Start',
+              style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -144,7 +123,7 @@ class TimeControls extends StatelessWidget {
           children: <Widget>[
             Icon(
               Icons.add,
-              color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+              color: Theme.of(Get.context!).primaryColor,
             ),
             const SizedBox(
               width: 4,

@@ -1,10 +1,12 @@
+import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
 import 'package:demo_bloc/constants/app_sound.dart';
-import 'package:demo_bloc/views/widgets/theme_switcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'constants/app_colors.dart';
+import 'constants/theme_colors.dart';
 import 'models/time_data_model.dart';
 import 'views/clock/clock_view.dart';
 
@@ -17,22 +19,7 @@ void main() async {
   Hive.registerAdapter(TimeDataModelAdapter());
   await Hive.openBox('prefs');
   await Hive.openBox<TimeDataModel>('time_data');
-  runApp(const App());
-}
-
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ThemeSwitcherWidget(
-      initialThemeData: ThemeData(
-        scaffoldBackgroundColor: AppColors.bgBlack,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: AppColors.bgBlack),
-      ),
-      child: const MyApp(),
-    );
-  }
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -43,14 +30,42 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final ThemeCubit themeCubit = Get.put<ThemeCubit>(ThemeCubit());
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Chess Clock',
-      debugShowCheckedModeBanner: false,
-      // theme: ThemeSwitcher.of(context).themeData,
-      home: ClockView(),
+    return BlocConsumer(
+      bloc: themeCubit,
+      listener: (context, ThemeColors state) {
+        // TODO: implement listener
+      },
+      builder: (context, ThemeColors state) {
+        return GetMaterialApp(
+          title: 'Chess Clock',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: state.color,
+            radioTheme: RadioThemeData(
+              fillColor: MaterialStateProperty.resolveWith((states) {
+                if (states.isEmpty) {
+                  return Colors.white38;
+                }
+                if (states.contains(MaterialState.selected)){
+                  return state.color;
+                }
+                return null;
+              }),
+            ),
+            scaffoldBackgroundColor: AppColors.bgBlack,
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: AppColors.bgBlack),
+          ),
+          home: ClockView(),
+        );
+      },
+      // buildWhen: (ThemeColors previous, ThemeColors current){
+      //   return previous != current;
+      // },
     );
   }
 }
