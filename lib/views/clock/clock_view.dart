@@ -20,7 +20,6 @@ class ClockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: Column(
         children: [
           Expanded(

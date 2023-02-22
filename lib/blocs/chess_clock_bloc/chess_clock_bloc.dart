@@ -21,8 +21,8 @@ class ChessClockBloc extends Bloc<ChessClockEvent, ChessClockState> {
     on<ChessClockReset>(_onChessClockReset);
     on<ChessClockRun1>(_onChessClockRun1);
     on<ChessClockRun2>(_onChessClockRun2);
-    timeBloc1 = TimeBloc(const Duration(seconds: 10));
-    timeBloc2 = TimeBloc(const Duration(seconds: 10));
+    timeBloc1 = TimeBloc(const Duration(seconds: 60));
+    timeBloc2 = TimeBloc(const Duration(seconds: 60));
   }
 
   _onChessClockStart(ChessClockStart event, Emitter<ChessClockState> emit) {

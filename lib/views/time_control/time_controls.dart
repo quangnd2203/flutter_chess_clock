@@ -8,11 +8,8 @@ import 'package:demo_bloc/views/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../blocs/theme_cubit/theme_cubit.dart';
-import '../../constants/theme_colors.dart';
 import '../../models/time_data_model.dart';
 import 'time_item.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TimeControls extends StatelessWidget {
   TimeControls({Key? key}) : super(key: key);
@@ -21,10 +18,7 @@ class TimeControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('rebuild');
-    // final a = ThemeSwitcher.of(Get.context!);
     return Scaffold(
-      backgroundColor: AppColors.bgBlack,
       body: Column(
         children: <Widget>[
           CustomAppbar(
@@ -40,7 +34,7 @@ class TimeControls extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(Get.context!).push(MaterialPageRoute(builder: (context) => const AppSettings()));
+                  Navigator.of(Get.context!).push(MaterialPageRoute(builder: (context) => AppSettings()));
                 },
                 color: Colors.white,
                 splashRadius: 0.1,
@@ -60,33 +54,27 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildButtonStart() {
-    return BlocConsumer(
-      bloc: Get.find<ThemeCubit>(),
-      listener: (context, ThemeColors state) {},
-      builder: (context, ThemeColors state) {
-        return Container(
-          height: 60,
-          margin: const EdgeInsets.all(24).copyWith(top: 0),
-          decoration: BoxDecoration(
-            color: state.color,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                blurRadius: 0.6,
-                spreadRadius: 1,
-                offset: const Offset(0, -1),
-                color: state.color,
-              ),
-            ],
+    return Container(
+      height: 60,
+      margin: const EdgeInsets.all(24).copyWith(top: 0),
+      decoration: BoxDecoration(
+        color: Theme.of(Get.context!).primaryColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            blurRadius: 0.6,
+            spreadRadius: 1,
+            offset: const Offset(0, -1),
+            color: Theme.of(Get.context!).primaryColor,
           ),
-          child: const Center(
-            child: Text(
-              'Start',
-              style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
-      },
+        ],
+      ),
+      child: const Center(
+        child: Text(
+          'Start',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 

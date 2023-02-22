@@ -1,6 +1,6 @@
-import 'package:demo_bloc/constants/app_colors.dart';
+import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../widgets/custom_appbar.dart';
 import 'theme_setting.dart';
 
@@ -10,7 +10,6 @@ class AppSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgBlack,
       body: Column(
         children: [
           const CustomAppbar(
@@ -25,12 +24,12 @@ class AppSettings extends StatelessWidget {
   }
 
   Widget buildBody() {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        children: const <Widget>[
-          ThemeSetting(),
-          SizedBox(height: 30,),
+        children: <Widget>[
+          ThemeSetting(theme: Get.find<ThemeCubit>().state,),
+          const SizedBox(height: 30,),
         ],
       ),
     );

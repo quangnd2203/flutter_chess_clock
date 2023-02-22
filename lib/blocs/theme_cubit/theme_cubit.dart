@@ -6,6 +6,7 @@ class ThemeCubit extends Cubit<ThemeColors> {
   ThemeCubit() : super(ThemeColors.values.firstWhere((e) => e.hex == AppPrefs.hexTheme));
 
   selectItem(ThemeColors color) {
+    print(color);
     emit(color);
   }
 
