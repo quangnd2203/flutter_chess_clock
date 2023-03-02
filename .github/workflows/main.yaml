@@ -45,7 +45,7 @@ jobs:
         env:
           WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
         if: env.WATCHKEY_APP_SECRET == 'Trust'
-          run: echo ${{env.WATCHKEY_APP_SECRET}}
+        run: echo ${{env.WATCHKEY_APP_SECRET}}
 #
 #      - name: Update Flutter dependencies
 #        run: flutter clean && flutter pub get
