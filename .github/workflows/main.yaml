@@ -29,10 +29,9 @@ jobs:
 
   release-ios:
     name: Build and distribute IOS app to TestFlight
-
-    runs-on: macos-latest
     env:
       WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-ruby@v1
@@ -46,6 +45,7 @@ jobs:
       - name: "Check WATCHKEY_APP_SECRET"
         if: env.WATCHKEY_APP_SECRET == 'Trust'
         run: echo "Tui biết token rồi nha"
+
 #
 #      - name: Update Flutter dependencies
 #        run: flutter clean && flutter pub get
@@ -53,5 +53,5 @@ jobs:
 #      - name: Install Fastlane
 #        run: cd ios && gem install cocoapods && pod install && cd ..
 #
-#      - name: Execute Fastlane command
-#        run: cd ios && fastlane ios staging
+      - name: Execute Fastlane command
+        run: fastlane ios staging

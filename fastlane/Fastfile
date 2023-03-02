@@ -1,0 +1,32 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+before_all do
+#     ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true'
+  ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'true' if ENV['FL_XCODE_VERSION'] && ENV['FL_XCODE_VERSION'].include?(' 13.')
+  ENV['MATCH_GIT_BASIC_AUTHORIZATION'] = 'cXVhbmduZDIyMDM6Z2hwX0ZIaExRZVZRTGhTaHA0ZHZsa0dQYUx1Tm1kS3AwUTBCN1V4Vw=='
+  ENV['MATCH_PASSWORD'] = 'password'
+
+end
+
+default_platform(:ios)
+
+platform :ios do
+    desc "Push a new staging build to TestFlight"
+    lane :staging do |options|
+        print(ENV['WATCHKEY_APP_SECRET'])
+    end
+end
+
