@@ -44,7 +44,7 @@ jobs:
       - name: "Check WATCHKEY_APP_SECRET"
         env:
           WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
-        run: echo ${{WATCHKEY_APP_SECRET}}
+        run: echo ${{secrets.WATCHKEY_APP_SECRET}}
 #
 #      - name: Update Flutter dependencies
 #        run: flutter clean && flutter pub get
