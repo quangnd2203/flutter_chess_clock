@@ -44,7 +44,7 @@ jobs:
       - name: "Check WATCHKEY_APP_SECRET"
         env:
           WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
-        if: env.WATCHKEY_APP_SECRET == "Trust"
+        if: env.WATCHKEY_APP_SECRET == 'Trust'
         run: echo "Tui biết token rồi nha"
 #
 #      - name: Update Flutter dependencies
