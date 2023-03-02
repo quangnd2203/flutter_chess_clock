@@ -37,15 +37,15 @@ jobs:
         with:
           ruby-version: '3.0'
 
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '3.3.3'
+#      - uses: subosito/flutter-action@v1
+#        with:
+#          flutter-version: '3.3.3'
 
       - name: "Check WATCHKEY_APP_SECRET"
         env:
           WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
-        if: env.WATCHKEY_APP_SECRET == 'Trust'
-        run: echo ${{env.WATCHKEY_APP_SECRET}}
+        if: env.WATCHKEY_APP_SECRET == "Trust"
+        run: echo "Tui biết token rồi nha"
 #
 #      - name: Update Flutter dependencies
 #        run: flutter clean && flutter pub get
