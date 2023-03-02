@@ -31,6 +31,8 @@ jobs:
     name: Build and distribute IOS app to TestFlight
 
     runs-on: macos-latest
+    env:
+      WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-ruby@v1
@@ -42,8 +44,6 @@ jobs:
 #          flutter-version: '3.3.3'
 
       - name: "Check WATCHKEY_APP_SECRET"
-        env:
-          WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
         if: env.WATCHKEY_APP_SECRET == 'Trust'
         run: echo "Tui biết token rồi nha"
 #
