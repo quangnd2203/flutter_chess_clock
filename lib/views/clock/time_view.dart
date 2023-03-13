@@ -1,8 +1,4 @@
-import 'package:demo_bloc/blocs/time_bloc/time_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../helper.dart';
+part of '../routers/app_page.dart';
 
 class TimeView extends StatelessWidget {
   const TimeView({Key? key, required this.timeBloc}) : super(key: key);
@@ -14,7 +10,7 @@ class TimeView extends StatelessWidget {
     return BlocConsumer(
       builder: (context, TimeState state){
         return Material(
-          color: getBackground(state),
+          color: getBackground(state, context),
           child: Center(
             child: Text(
               formatTime(state.duration),
@@ -28,10 +24,10 @@ class TimeView extends StatelessWidget {
     );
   }
 
-  Color getBackground(TimeState state){
+  Color getBackground(TimeState state, BuildContext context){
     switch(state.runtimeType){
       case TimeRunState:
-        return Colors.green;
+        return ThemeSwitcher.of(context).themeData.primaryColor;
       case TimeCompleteState:
         return Colors.red;
     }

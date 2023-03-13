@@ -1,12 +1,13 @@
-import 'package:demo_bloc/views/widgets/keyboard_dimisser.dart';
-import 'package:flutter/material.dart';
+part of '../routers/app_page.dart';
 
-import '../../constants/app_colors.dart';
-import '../widgets/custom_appbar.dart';
-
-class CustomTime extends StatelessWidget {
+class CustomTime extends StatefulWidget {
   const CustomTime({Key? key}) : super(key: key);
 
+  @override
+  State<CustomTime> createState() => _CustomTimeState();
+}
+
+class _CustomTimeState extends State<CustomTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +38,7 @@ class CustomTime extends StatelessWidget {
   }
 
   Widget buildName() {
+    final Color themeColor = ThemeSwitcher.of(context).themeData.primaryColor;
     return TextField(
       style: const TextStyle(fontSize: 16, color: Colors.white),
       cursorColor: Colors.white,
@@ -44,7 +46,7 @@ class CustomTime extends StatelessWidget {
         labelText: 'Name',
         floatingLabelStyle: MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
           if (states.contains(MaterialState.focused)) {
-            return const TextStyle(fontSize: 14, color: Colors.green);
+            return TextStyle(fontSize: 14, color: themeColor);
           }
           return const TextStyle(fontSize: 16, color: Colors.grey);
         }),
@@ -52,8 +54,8 @@ class CustomTime extends StatelessWidget {
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.transparent, width: 0),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.green, width: 2),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: themeColor, width: 2),
         ),
         filled: true,
         fillColor: AppColors.black,

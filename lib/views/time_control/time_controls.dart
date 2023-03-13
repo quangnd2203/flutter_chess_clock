@@ -1,27 +1,15 @@
-import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
-import 'package:demo_bloc/blocs/time_data_cubit/time_data_cubit.dart';
-import 'package:demo_bloc/constants/app_colors.dart';
-import 'package:demo_bloc/views/custom_time/custom_time.dart';
-import 'package:demo_bloc/views/app_settings/app_settings.dart';
-import 'package:demo_bloc/views/widgets/custom_appbar.dart';
-import 'package:demo_bloc/views/widgets/theme_switcher.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import '../../constants/theme_colors.dart';
-import '../../models/time_data_model.dart';
-import 'time_item.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+part of '../routers/app_page.dart';
 
-class TimeControls extends StatelessWidget {
-  TimeControls({Key? key}) : super(key: key);
-
-  final TimeDataCubit timeDataCubit = Get.put(TimeDataCubit());
+class TimeControls extends StatefulWidget {
+  const TimeControls({Key? key}) : super(key: key);
 
   @override
+  State<TimeControls> createState() => _TimeControlsState();
+}
+
+class _TimeControlsState extends State<TimeControls> {
+  @override
   Widget build(BuildContext context) {
-    // print('rebuild');
-    // final a = ThemeSwitcher.of(Get.context!);
     return Scaffold(
       backgroundColor: AppColors.bgBlack,
       body: Column(
@@ -30,7 +18,9 @@ class TimeControls extends StatelessWidget {
             title: 'Time Controls',
             actions: <Widget>[
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.customTime.route);
+                },
                 color: Colors.white,
                 splashRadius: 0.1,
                 icon: const Icon(
@@ -39,7 +29,9 @@ class TimeControls extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => const AppSettings()));
+                  Get.toNamed(Routes.appSetting.route);
+
+                  // Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => const AppSettings()));
                 },
                 color: Colors.white,
                 splashRadius: 0.1,
@@ -59,46 +51,18 @@ class TimeControls extends StatelessWidget {
   }
 
   Widget buildButtonStart() {
-    // return BlocConsumer(
-    //   bloc: Get.find<ThemeCubit>(),
-    //   listener: (context, ThemeColors state) {},
-    //   builder: (context, ThemeColors state) {
-    //     return Container(
-    //       height: 60,
-    //       margin: const EdgeInsets.all(24).copyWith(top: 0),
-    //       decoration: BoxDecoration(
-    //         color: state.color,
-    //         borderRadius: BorderRadius.circular(16),
-    //         boxShadow: <BoxShadow>[
-    //           BoxShadow(
-    //             blurRadius: 0.6,
-    //             spreadRadius: 1,
-    //             offset: const Offset(0, -1),
-    //             color: state.color,
-    //           ),
-    //         ],
-    //       ),
-    //       child: const Center(
-    //         child: Text(
-    //           'Start',
-    //           style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
     return Container(
       height: 60,
       margin: const EdgeInsets.all(24).copyWith(top: 0),
       decoration: BoxDecoration(
-        color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+        color: ThemeSwitcher.of(context).themeData.primaryColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: <BoxShadow>[
           BoxShadow(
             blurRadius: 0.6,
             spreadRadius: 1,
             offset: const Offset(0, -1),
-            color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+            color: ThemeSwitcher.of(context).themeData.primaryColor,
           ),
         ],
       ),
@@ -131,7 +95,7 @@ class TimeControls extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
       onTap: () {
-        Get.to(const CustomTime());
+        // Get.to(const CustomTime());
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -144,7 +108,7 @@ class TimeControls extends StatelessWidget {
           children: <Widget>[
             Icon(
               Icons.add,
-              color: ThemeSwitcher.of(Get.context!).themeData!.primaryColor,
+              color: ThemeSwitcher.of(context).themeData.primaryColor,
             ),
             const SizedBox(
               width: 4,
@@ -161,7 +125,7 @@ class TimeControls extends StatelessWidget {
 
   Widget buildList() {
     return ValueListenableBuilder<Box<TimeDataModel>>(
-      valueListenable: timeDataCubit.box.listenable(),
+      valueListenable: Get.find<TimeDataCubit>().box.listenable(),
       builder: (BuildContext context, Box<TimeDataModel> value, Widget? child) {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) => TimeItem(

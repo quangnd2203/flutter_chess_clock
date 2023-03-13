@@ -3,51 +3,16 @@
 import 'package:flutter/material.dart';
 
 class ThemeSwitcher extends InheritedWidget {
+  const ThemeSwitcher({super.key, required this.themeData, required super.child});
+  final ThemeData themeData;
 
-  const ThemeSwitcher({super.key, required this.data, required super.child});
-  final _ThemeSwitcherWidgetState data;
-
-  static _ThemeSwitcherWidgetState of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<ThemeSwitcher>()!.data;
+  static ThemeSwitcher of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ThemeSwitcher>()!;
   }
 
   @override
   bool updateShouldNotify(covariant ThemeSwitcher oldWidget) {
-    print('CCCC');
-    return this != oldWidget;
+    return themeData != oldWidget.themeData;
   }
 }
 
-class ThemeSwitcherWidget extends StatefulWidget {
-
-  const ThemeSwitcherWidget(
-      {super.key, required this.child, required this.initialThemeData});
-  final Widget child;
-  final ThemeData initialThemeData;
-
-  @override
-  _ThemeSwitcherWidgetState createState() => _ThemeSwitcherWidgetState();
-}
-
-class _ThemeSwitcherWidgetState extends State<ThemeSwitcherWidget> {
-  ThemeData? themeData;
-  String? name;
-
-  void switchMode({ThemeData? themeData}) {
-    setState(() {
-      if (themeData != null){
-        this.themeData = themeData;
-        name = themeData.hashCode.toString();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    themeData = themeData ?? widget.initialThemeData;
-    return ThemeSwitcher(
-      data: this,
-      child: widget.child,
-    );
-  }
-}

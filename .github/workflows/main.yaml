@@ -27,31 +27,31 @@ jobs:
 #      - name: Execute Fastlane command
 #        run: cd android && fastlane android staging
 
-  release-ios:
-    name: Build and distribute IOS app to TestFlight
-    env:
-      WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '3.0'
-
-#      - uses: subosito/flutter-action@v1
+#  release-ios:
+#    name: Build and distribute IOS app to TestFlight
+#    env:
+#      WATCHKEY_APP_SECRET: ${{secrets.WATCHKEY_APP_SECRET}}
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/setup-ruby@v1
 #        with:
-#          flutter-version: '3.3.3'
-
-      - name: "Check WATCHKEY_APP_SECRET"
-        if: env.WATCHKEY_APP_SECRET == 'Trust'
-        run: echo "Tui biết token rồi nha"
-
+#          ruby-version: '3.0'
 #
-#      - name: Update Flutter dependencies
-#        run: flutter clean && flutter pub get
+##      - uses: subosito/flutter-action@v1
+##        with:
+##          flutter-version: '3.3.3'
 #
-#      - name: Install Fastlane
-#        run: cd ios && gem install cocoapods && pod install && cd ..
+#      - name: "Check WATCHKEY_APP_SECRET"
+#        if: env.WATCHKEY_APP_SECRET == 'Trust'
+#        run: echo "Tui biết token rồi nha"
 #
-      - name: Execute Fastlane command
-        run: fastlane ios staging
+##
+##      - name: Update Flutter dependencies
+##        run: flutter clean && flutter pub get
+##
+##      - name: Install Fastlane
+##        run: cd ios && gem install cocoapods && pod install && cd ..
+##
+#      - name: Execute Fastlane command
+#        run: fastlane ios staging

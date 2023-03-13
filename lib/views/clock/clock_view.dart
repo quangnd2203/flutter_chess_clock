@@ -1,21 +1,18 @@
-import 'dart:math';
+part of '../routers/app_page.dart';
 
-import 'package:demo_bloc/blocs/sound_bloc/sound_cubit.dart';
-import 'package:demo_bloc/blocs/theme_cubit/theme_cubit.dart';
-import 'package:demo_bloc/constants/app_colors.dart';
-import 'package:demo_bloc/views/clock/time_view.dart';
-import 'package:demo_bloc/views/time_control/time_controls.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../blocs/chess_clock_bloc/chess_clock_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+class ClockView extends StatefulWidget {
+  const ClockView({Key? key}) : super(key: key);
 
-class ClockView extends StatelessWidget {
-  ClockView({Key? key}) : super(key: key);
+  @override
+  State<ClockView> createState() => _ClockViewState();
+}
 
-  final ChessClockBloc clockBloc = Get.put<ChessClockBloc>(ChessClockBloc());
-  final SoundCubit soundCubit = Get.put<SoundCubit>(SoundCubit());
-  final ThemeCubit themeCubit = Get.put<ThemeCubit>(ThemeCubit());
+class _ClockViewState extends State<ClockView> {
+  ChessClockBloc get clockBloc => Get.find<ChessClockBloc>();
+
+  SoundCubit get soundCubit => Get.find<SoundCubit>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +67,8 @@ class ClockView extends StatelessWidget {
             width: 50,
           ),
           buildButtonSetting(Icons.timer_outlined, (){
-            Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => TimeControls()));
+            Get.toNamed(Routes.timeControl.route);
+            // Navigator.push(Get.context!, MaterialPageRoute(builder: (BuildContext context) => TimeControls()));
           }),
           const SizedBox(
             width: 20,
