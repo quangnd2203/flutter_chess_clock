@@ -32,6 +32,14 @@ class _CustomTimeState extends State<CustomTime> {
       child: Column(
         children: [
           buildName(),
+          const SizedBox(
+            height: 16,
+          ),
+          buildTime('Time'),
+          const SizedBox(
+            height: 16,
+          ),
+          buildTime('Increment'),
         ],
       ),
     );
@@ -62,4 +70,23 @@ class _CustomTimeState extends State<CustomTime> {
       ),
     );
   }
+
+  Widget buildTime(String title) {
+    return Row(
+      children: <Widget>[
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+          ),
+        ),
+        const Expanded(
+          child: SizedBox(),
+        ),
+        const TimeInput(),
+      ],
+    );
+  }
+
 }
